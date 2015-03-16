@@ -2,8 +2,8 @@ import nltk, os, sys
 from nltk.parse.stanford import StanfordParser
 from nltk.tree import Tree
 from nltk.stem.wordnet import WordNetLemmatizer
-from util.tag_identity_util import *
-from util.word_identity_util import WordIdentity
+from util.tag_util import *
+from util.word_util import WordIdentity
 
 class QuestionGenerator(object):
 
@@ -28,10 +28,10 @@ class QuestionGenerator(object):
     pruning
     """
 
-    def generateYesNoQuestionFromNPVP(self, sent):
+    def generateYesNoQuestionNVN(self, sent):
         tree = self.english_parser.raw_parse_sents((sent, ))
         root = tree[0]
-        NPTree, VPTree = self.splitNPVPTree(root)
+        NPTree, VPTree = self.splitNVNTree(root)
         rephrasedNPVPQ = self.rephraseQuestion(NPTree, VPTree)
         return rephrasedNPVPQ
 
@@ -48,12 +48,10 @@ class QuestionGenerator(object):
             VP = ' '.join(VPLeaves[1:])
             return prefix+' '+NP+' '+VP
         elif VPEnd == 1:
-            if VP_POS[0][1] == 'VB':
+            if VP_POS[0][1] == r'VBP*\b':
                 prefix = 'do'
             elif VP_POS[0][1] == 'VBD':
                 prefix = 'did'
-            elif VP_POS[0][1] == 'VBP':
-                prefix = 'do'
             elif VP_POS[0][1] == 'VBZ':
                 prefix = 'does'
             NP = ' '.join(NPLeaves)
@@ -68,9 +66,9 @@ class QuestionGenerator(object):
         else:
             return "Not yet implement"
 
-    def splitNPVPTree(self, root):
+    def splitNVNTree(self, root):
         if len(root) == 1 and (root.label() == 'ROOT' or root.label() == 'S'):
-            return self.splitNPVPTree(root[0])
+            return self.splitNVNTree(root[0])
         else:
             if root[0].label() == 'NP' and root[1].label() == 'VP':
                 return root[0], root[1]
@@ -84,7 +82,7 @@ class QuestionGenerator(object):
             return root.label()
 
     def testAsking(self):
-        q1 = "it is the country's principal political, cultural, commercial, industrial, and transportation centre, sometimes described as the primate city of Hungary"
-        # q1 = "the cat is sleeping on the mat"
+        # q1 = "it is the country's principal political, cultural, commercial, industrial, and transportation centre, sometimes described as the primate city of Hungary"
+        q1 = "the cat is sleeping"
         print 'question:',  q1
-        print 'answer:', self.generateYesNoQuestionFromNPVP(q1)
+        print 'answer:', self.generateYesNoQuestionNVN(q1)
