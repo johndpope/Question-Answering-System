@@ -1,28 +1,28 @@
 import re, nltk;
 
-def is_verb(tag):
+def isVerb(tag):
     return (tag[:1] == 'V')
 
-def is_md(tag):
+def isMd(tag):
     return (tag == 'MD')
 
-def is_noun(tag):
+def isNoun(tag):
     return (tag[:1] == 'N')
 
-def is_adj(tag):
+def isAdj(tag):
     return (tag[:2] == "JJ")
 
-def is_num(tag):
+def isNum(tag):
     return (tag[:2] == "CD")
 
-def is_propN(tag):
+def isPropN(tag):
     return (tag == "NNP");
 
-def is_syn(tag):
+def isSyn(tag):
     return (tag == "SYN")
 
-def is_custom(tag):
+def isCustom(tag):
     return (tag == "CST")
 
-def is_high_priority(tag):
+def isHighPriority(tag):
     return (tag == "HGH")
