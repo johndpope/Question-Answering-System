@@ -22,7 +22,7 @@ if __name__ == "__main__":
         """)
 
     article_filename = sys.argv[1]
-    N = int(sys.argv[2])
+    num_questions = int(sys.argv[2])
 
     article = Article(article_filename)
     sentences = article.to_sentences_list()

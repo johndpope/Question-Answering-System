@@ -24,7 +24,7 @@ class Article(object):
         return resolved_u
 
     def to_sentences_list(self):
-        sentence_list = nltk_helper.parseTextToSentences(self.content)
+        sentence_list = nltkHelper.parse_text_to_sentences(self.content)
         return sentence_list
     
     # def parse_html_coref(self):
