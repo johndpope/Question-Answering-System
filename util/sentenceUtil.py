@@ -5,8 +5,8 @@
 
 from collections import deque;
 from copy import deepcopy;
-from util.tag_util import *
-from util.word_util import WordIdentity
+from util.tagUtil import *
+from util.wordUtil import WordIdentity
 import nltk;
 
 # Minimum number of tokens required in a sentence to turn it into a question
@@ -17,7 +17,7 @@ MIN_SENTENCE_LENGTH = 5
 # 1. longer or equal to minimum length
 # 2. contain a verb
 # 3. has end punctuation
-def isSentence(s):
+def is_sentence(s):
     # Get the tokens of the sentence.  It's possible there are none,
     # in which case this is definitely not a sentence.
     toks = nltk.word_tokenize(s)

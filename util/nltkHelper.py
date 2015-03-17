@@ -15,7 +15,7 @@ from nltk.tokenize.punkt import PunktSentenceTokenizer, PunktParameters
 # from nltk.corpus import wordnet
 from nltk.stem import porter, snowball
 
-def parseFileToSentences(filename):
+def parse_file_to_sentences(filename):
     punkt_param = PunktParameters()
     punkt_param.abbrev_types = set(['dr', 'vs', 'mr', 'ms', 'mrs', 'prof', 'inc', 'no', 'e.g', 'i.e'])
     sentence_splitter = PunktSentenceTokenizer(punkt_param)
@@ -29,7 +29,7 @@ def parseFileToSentences(filename):
             sentences.extend(sentence_splitter.tokenize(para))
     return sentences
 
-def parseTextToSentences(text):
+def parse_text_to_sentences(text):
     punkt_param = PunktParameters()
     punkt_param.abbrev_types = set(['dr', 'vs', 'mr', 'ms', 'mrs', 'prof', 'inc', 'no', 'e.g', 'i.e'])
     sentence_splitter = PunktSentenceTokenizer(punkt_param)
@@ -56,15 +56,15 @@ def parseTextToSentences(text):
 
 # Stemmer based on Porter Stemmer.
 # TODO: Maybe look into snowball stemmer? Tried to do this, but unicode conflicts.
-def getStem(word):
+def get_stem(word):
     stemmer = porter.PorterStemmer()
     return stemmer.stem(word)
 
-def hasSameStem(word1, word2):
-    return getStem(word1) == getStem(word2)
+def has_same_stem(word1, word2):
+    return get_stem(word1) == get_stem(word2)
 
 # Splits sentence to clauses separated by commas or semicolons
-def splitSentence(sentence):
+def split_sentence(sentence):
     minSentLen = 6 
 
     splitList = [",", ";"]
