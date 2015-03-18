@@ -1,3 +1,9 @@
+# article.py
+# Authored by Kuang-Huei Lee | kuanghul@andrew.cmu.edu
+# Article class that encapsule a article
+
+# TODO: add coref
+
 import bs4
 import re
 import nltk
@@ -5,8 +11,6 @@ import util.nltkHelper as nltkHelper
 # import subprocess
 
 class Article(object):
-
-    # TODO: add coref
 
     def __init__(self, html_filename):
         self.html_filename = html_filename

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # 
-# Usage: ./ask.py article_file.htm N
+# Usage: ./ask.py article_path num_questions
 # 
 
 from util.article import Article
@@ -33,6 +33,7 @@ if __name__ == "__main__":
     # Use POS Tagging and Transformation rules to generate questions
     questions = questionGenerator.process(selected_sentences)
 
+    # Select tops and print questions
     questions = questions[:num_questions]
     for question in questions:
-        print(question + "\n")
+        print question
