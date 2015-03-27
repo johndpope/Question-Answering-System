@@ -4,7 +4,8 @@ import errno
 import codecs
 
 def main():
-	filepath = "xml/a1/*.tagged"
+	filepath = sys.argv[1]
+	filepath += "/*.tagged"
 	files = glob.glob(filepath)
 
 	for name in files:
