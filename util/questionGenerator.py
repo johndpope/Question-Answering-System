@@ -8,7 +8,21 @@ import re
 import nltk
 import random
 from util.tagUtil import *
-from util.wordUtil import WordIdentity
+from util.wordUtil import *
+from util.questionTransformer import QuestionTransformer
+import util.rdrpos as rdrpos
+from nltk.parse.stanford import StanfordParser
+from nltk.tag.stanford import POSTagger
+from nltk.tag.stanford import NERTagger
+from nltk.stem.wordnet import WordNetLemmatizer
+
+
+stanford_parser = StanfordParser('StanfordCoreNLP/stanford-parser.jar', 'StanfordCoreNLP/stanford-parser-3.4.1-models.jar')
+stanford_postagger = POSTagger('util/stanford-postagger/models/english-bidirectional-distsim.tagger','util/stanford-postagger/stanford-postagger.jar') 
+
+def capitalize_First_Char(sentence):
+    sentence[0] = sentence[0].upper()
+    return sentence
 
 # GIVEN string sentence
 # RETURNS (question string, success boolean)
@@ -86,11 +100,45 @@ def transform(sentence):
 
     return (sentence, False)
 
+def trans_Q(sentence, s_parser, s_postagger, s_NERtagger):
+    qt = QuestionTransformer(sentence, s_parser, s_postagger, s_NERtagger)
+    q = qt.transform_IF_TO_WHY_WILL()
+    if q != None: return (q, True)
+    q = qt.transform_NER_based()
+    if q != None: return (q, True)
+    q = qt.transform_WHEN_FROM_YEAR()
+    if q != None: return (q, True)
+    q = qt.transform_YES_NO_NPVP(None, None)
+    if q != None: return (q, True)
+    q = qt.transform_IT_IS()
+    if q != None: return (q, True)
+    # failed on trasforming this sentence
+    return (sentence, False)
+
+# more JJ -> less JJ
+# more than -> less than
+# antonyms
+def hard_question_transform(token_list):
+    pass
+    
 # GIVEN list of sentences,
 # RETURNS list of questions.
 def process(sentences):
+    # Initialize Stanford NLP tool
+    s_parser = StanfordParser('StanfordCoreNLP/stanford-parser.jar', 'StanfordCoreNLP/stanford-parser-3.4.1-models.jar')
+    s_postagger = POSTagger('util/stanford-postagger/models/english-bidirectional-distsim.tagger','util/stanford-postagger/stanford-postagger.jar') 
+    s_NERtagger = NERTagger('util/stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz','util/stanford-ner/stanford-ner.jar')
+
     questions = [ ]
     for sentence in sentences:
-        (question, success) = transform(sentence)
-        if (success): questions.append( question )
+        # print sentence
+        # tags = rdrpos.pos_tag(sentence.strip())
+        # print tags
+        # tokens = nltk.word_tokenize(sentence)
+        # print stanford_postagger.tag(tokens)
+        # print stanford_parser.tag(sentence.strip())
+        # (question, success) = trasform(sentence)
+        (token_list, success) = trans_Q(sentence, s_parser, s_postagger, s_NERtagger)
+        if (success): questions.append(' '.join(token_list))
+        # TODO: antomyns, synmyms
     return questions

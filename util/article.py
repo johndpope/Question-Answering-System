@@ -25,7 +25,8 @@ class Article(object):
         except:
             resolved = open(self.html_filename).read()
         resolved_u = resolved.decode("utf8")
-        return resolved_u
+        resolved = resolved_u.encode('ascii', 'ignore')
+        return resolved
 
     def to_sentences_list(self):
         sentence_list = nltkHelper.parse_text_to_sentences(self.content)
