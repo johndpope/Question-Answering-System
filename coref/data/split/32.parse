@@ -1,0 +1,2 @@
+PARSE	-123.96036529541016	(ROOT (NP (NP (NNP Dictionary)) (PP (IN of) (NP (NNP Symbols))) (, ,) (PP (IN by) (NP (NP (NNP Carl) (NNP G.) (NNP Liungman)) (, ,) (NP (NNP W.) (NNP W.) (NNP Norton) (CC &) (NNP Company)))) (. .)))
+PARSE	-34.41264724731445	(ROOT (NP (NN ISBN) (CD 0-393-31236-4)))
