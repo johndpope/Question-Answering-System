@@ -1,11 +1,17 @@
 import subprocess
 import glob
+import sys
 
 def main():
-	files = glob.glob("data/splits/*.txt")
+	filepath = sys.argv[1]
+	filepath += "/*.txt"
+	print filepath
+	files = glob.glob(filepath)
 
 	for name in files:
+		print name
 		command = "./arkref.sh -input "+ name
+		'''
 		p = subprocess.Popen(command,shell=True)
 		p.wait()
 		'''
@@ -13,7 +19,6 @@ def main():
 		p = subprocess.Popen(command,shell=True,stdout=f,stderr=f)
 		p.wait()
 		f.close()
-		'''
 
 if __name__ == '__main__':
 	main()
