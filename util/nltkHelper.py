@@ -15,7 +15,7 @@ import nltk.data
 import codecs
 from nltk.tokenize.punkt import PunktSentenceTokenizer, PunktParameters
 from nltk.stem import porter, snowball
-from nltk.corpus import wordnet
+from nltk.corpus import wordnet as wn
 
 def parse_text_to_sentences(text):
     punkt_param = PunktParameters()
@@ -30,11 +30,18 @@ def parse_text_to_sentences(text):
             sentences.extend(sentence_splitter.tokenize(para))
     return sentences
 
-# def getSynonyms(word):
-#     syns = wordnet.synsets(word)
-#     #To get rid of duplicates, we first convert to set.
-#     synonyms = list(set([l.name.replace('_', ' ') for s in syns for l in s.lemmas]))
-#     return synonyms
+def get_antonym():
+    return wn.lemma('rush.v.01.rush').antonyms()
+
+# http://qheroq.blogspot.com/2010/10/python25.html
+# http://blog.csdn.net/Eliza1130/article/details/23936033
+# http://www.nltk.org/howto/wordnet.html
+def get_synonyms(word):
+    syns = wn.synsets(word)
+    return syns
+    #To get rid of duplicates, we first convert to set.
+    # synonyms = list(set([l.name.replace('_', ' ') for s in syns for l in s.lemmas]))
+    # return synonyms
 
 # def areSynonyms(word1, word2):
 #     return word2 in getSynonyms(word1)
