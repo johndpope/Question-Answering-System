@@ -14,7 +14,7 @@ def quickSortHelper(fileList,start,end):
 		quickSortHelper(fileList,pivot+1,end)
 
 def partition(fileList,start,end):
-	pivot = int(((fileList[start].split('/')[-1]).split('.')[0]).split('_')[-1])
+	pivot = int((fileList[start].split('/')[-1]).split('.')[0])
 
 	left = start + 1
 	right = end
@@ -23,10 +23,10 @@ def partition(fileList,start,end):
 
 	while not done:
 		while left <= right and \
-			int(((fileList[left].split('/')[-1]).split('.')[0]).split('_')[-1]) <= pivot:
+			int((fileList[left].split('/')[-1]).split('.')[0]) <= pivot:
 		 	left += 1
 
-		while int(((fileList[right].split('/')[-1]).split('.')[0]).split('_')[-1]) >= pivot \
+		while int((fileList[right].split('/')[-1]).split('.')[0]) >= pivot \
 			and right >= left:
 		 	right -= 1
 
@@ -44,11 +44,13 @@ def partition(fileList,start,end):
 	return right
 
 def main():
-	filepath = 'processed/a1/*.txt' # THIS MAY CHANGE
+	filepath = sys.argv[1] # THIS MAY CHANGE
+	filepath += "/*.txt" 
 	files = glob.glob(filepath)
 	sortFile(files)
-
-	fmerge = open('processed/a1.txt','a') # THIS MAY CHANGE
+	one = "processed/" + (filepath.split('/')[1]).split('_')[1] + ".txt"
+	print "merge " + one
+	fmerge = open(one,'a') # THIS MAY CHANGE
 
 	for name in files:
 		#print name
