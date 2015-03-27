@@ -1,5 +1,0 @@
-1. run filegen.py to split a file into paragraphs and each paragraph is a new file
-2. run runArk.py in arkref folder
-3. run toxml.py to process .tagged file created by arkRef
-4. run preprocess.py to generate file after coreference resolution
-5. run merge.py to merge the files(paragraphs) to one file
