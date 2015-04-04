@@ -1,0 +1,5 @@
+PARSE	-94.94795227050781	(ROOT (S (S (NP (NNP Singapore)) (VP (VBZ is) (NP (DT an) (NN education) (NN hub)))) (, ,) (CC and) (S (NP (JJ many) (JJ foreign) (NNS students)) (VP (VBP study) (PP (IN in) (NP (NNP Singapore))))) (. .)))
+PARSE	-78.00634002685547	(ROOT (S (NP (QP (JJR More) (IN than) (CD 80,000)) (JJ international) (NNS students)) (VP (VBD studied) (PP (IN in) (NP (NNP Singapore))) (PP (IN in) (NP (CD 2006)))) (. .)))
+PARSE	-127.42720794677734	(ROOT (S (NP (DT Every) (NN morning)) (, ,) (NP (QP (JJR more) (IN than) (CD 5,000)) (JJ Malaysian) (NNS students)) (VP (VBP cross) (NP (NP (DT the) (NNP JohorSingapore) (NNP Causeway)) (PP (IN for) (NP (NP (NN education)) (PP (IN in) (NP (NNP Singapore))))))) (. .)))
+PARSE	-95.94139862060547	(ROOT (S (PP (IN In) (NP (CD 2009))) (, ,) (NP (NP (CD 20) (NN %)) (PP (IN of) (NP (NP (DT all) (NNS students)) (PP (IN in) (NP (NNP Singaporean) (NNS universities)))))) (VP (VBD were) (NP (JJ international) (NNS students))) (. .)))
+PARSE	-64.77059173583984	(ROOT (S (NP (DT The) (NNS students)) (VP (VBD were) (ADVP (RB mainly)) (PP (IN from) (NP (NNP ASEAN) (, ,) (NNP China) (CC and) (NNP India)))) (. .)))
