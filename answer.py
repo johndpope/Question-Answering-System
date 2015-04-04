@@ -12,38 +12,42 @@ OK for simple question answering, but coreference resolution is definitely
 needed in answering medium and hard questions.
 """
 
+
 def steming(sentences):
 	"""	
-		Input:  a list of sentenses
-		Output: a dict of sentenses with tokens stemed,
-				key = stemed sentence, value = original sentence
+		Input:  a list of cleaned sentences (i.e. stop words removed)
+		Output: a list of sentenses with tokens stemed,
 	"""
 	porter = nltk.PorterStemmer()
 	#lancaster = nltk.LancasterStemmer()
-	stemedSentences = dict()
-	for sentence in sentences:
+	# stemedSentences = dict()
+	stemedSentences = []
+	for i in range(0,len(sentences)):
 		#print "Processing sentence: ", sentence
-		tokens = nltk.word_tokenize(sentence)
+		tokens = nltk.word_tokenize(sentences[i])
 		stemedTokens = [porter.stem(t) for t in tokens]
 		# stemedSentences[sentence]=' '.join(stemedTokens)
-		stemedSentences[' '.join(stemedTokens)]=sentence
+		# stemedSentences[' '.join(stemedTokens)]=org[i]
+		stemedSentences += [' '.join(stemedTokens)]
 	return stemedSentences
+
 
 def tfidf(sentences):
 	"""
-	Input a dict of sentences, return the tfidf matrix
+	Input a list of sentences, return the tfidf matrix
 	"""
-	sentences = sentences.keys()
+	# sentences = sentences.keys()
 	tfidf_vectorizer = TfidfVectorizer()
 	tfidf_matrix = tfidf_vectorizer.fit_transform(sentences)
 	return tfidf_vectorizer, tfidf_matrix
 
 def tfidfSearch(tfidf_vectorizer, tfidf_matrix, sentences, query):
-	sentences = sentences.keys()
+	# sentences = sentences.keys()
 	response = tfidf_vectorizer.transform([query])
 	similarities = cosine_similarity(response, tfidf_matrix).flatten()
 	sortedSimilarity = numpy.argsort(similarities)[::-1]
-	return sentences[sortedSimilarity[0]]
+	# return sentences[sortedSimilarity[0]]
+	return sortedSimilarity[0] # the index of the sentence with largest similarity
 
 def isTooShort(line):
 	tokens = nltk.word_tokenize(line)
@@ -55,8 +59,19 @@ def readSentences(infile):
 	sent_tokenizer=nltk.data.load('tokenizers/punkt/english.pickle')
 	sentences = []
 	for line in infile:
-		if line.strip() and (not isTooShort(line)):
-			sentences += sent_tokenizer.tokenize(line)
+		# print line
+		if (line.strip() and (not isTooShort(line))):
+			single_sentences = sent_tokenizer.tokenize(line)
+			for k in single_sentences:
+				if ( k[-1] in ['.','!',','] ):
+					sentences += [k]
+	return sentences
+
+def readQuestion(infile):
+	sent_tokenizer=nltk.data.load('tokenizers/punkt/english.pickle')
+	sentences = []
+	for line in infile:
+		sentences += sent_tokenizer.tokenize(line)
 	return sentences
 
 def getAntonyms(s1):
@@ -78,7 +93,7 @@ def getAntonyms(s1):
 
 def haveAntonyms(antonyms,s2):
 	# antonyms = getAntonyms(s1)
-	stemedS2 = steming([s2]).keys()[0]
+	stemedS2 = steming([s2])[0]
 	tokens = nltk.word_tokenize(stemedS2)
 	for w in tokens:
 		if w in antonyms:
@@ -109,35 +124,27 @@ def answerSimple(targetSentence, query, negWords):
 		else:
 			return 'Yes.'
 
-# def answerSimple(targetSentence, query, negWords):
-# 	"""
-# 	To improve:
-# 		look up for antonym in target and query sentence?
-# 	"""
-# 	negInTarget = 0
-# 	negInQuery = 0
-# 	for token in nltk.word_tokenize(targetSentence):
-# 		if token in negWords:
-# 			negInTarget += 1
-# 	for token in nltk.word_tokenize(query):
-# 		if token in negWords:
-# 			negInQuery += 1
-# 	if negInQuery != negInTarget:
-# 		return 'No.'
-# 	return 'Yes.'
-
+WHwords = ['what','which','when','where','why','how','whom','who',' or ']
 def isSimpleQuest(question):
-	i = question.find(' ')
-
-	if 	question[0:2].lower()=='wh' \
-		or question[0:3].lower()=='how' \
-		or question[(i+1):(i+3)].lower()=='wh':
-		return False
+	for k in WHwords:
+		if k in question.lower():
+			return False
 	return True
 
 def printHash(myHash):
 	for key in myHash.keys():
 		print key,": ",myHash[key]
+
+def removeStopWords(sentences,stopWords):
+	"""Input: a list of sentences & a dict of stop words"""
+	cleanSentences = []
+	for sen in sentences:
+		tokens = nltk.word_tokenize(sen)
+		for i in range(0,len(tokens)):
+			if tokens[i].lower() in stopWords:
+				tokens[i] = ''
+		cleanSentences += [' '.join(tokens).strip()]
+	return cleanSentences
 
 def main():
 	if len(sys.argv) < 3:
@@ -146,37 +153,58 @@ def main():
 	article = sys.argv[1]
 	quests = sys.argv[2]
 
-	print "Reading input file and split into sentences... "
+	print >> sys.stderr, "Reading input file and split into sentences... "
 	infile = codecs.open(article,encoding='utf-8')
-	sentences = readSentences(infile)
+	sentences = readSentences(infile) # a list of original sentences
 	infile.close()
 
-	print "Steming the tokens... "
-	stemedSentences = steming(sentences)
+	print >> sys.stderr, "Remove stop words before stemming and TF-IDF..."
+	stopFilePath = "./Misc/stopword.txt"
+	stopFile = open(stopFilePath,'r')
+	stopWords = dict()
+	for word in stopFile:
+		stopWords[word.strip()] = 1
+	stopFile.close()
+	cleanSentences = removeStopWords(sentences,stopWords) # a list of stop-free sentences
+	# print cleanSentences
 
-	print "Building TF-IDF matrix..."
+	print >> sys.stderr, "Steming the tokens... "
+	stemedSentences = steming(cleanSentences) # a list of stop-free, stemmed sentences
+	# print stemedSentences
+
+	print >> sys.stderr, "Building TF-IDF matrix..."
 	(tfidf_vectorizer, tfidf_matrix) = tfidf(stemedSentences)
 
-	print "Reading in Questions..."
+	print >> sys.stderr, "Reading in Questions..."
 	quesfile = codecs.open(quests,encoding='utf-8')
-	questions = readSentences(quesfile)
+	questions = readQuestion(quesfile) # a list of questions
 	quesfile.close()
+	# print questions
 
-	print "Steming the questions..."
-	stemedQuestions = steming(questions)
+	print >> sys.stderr, "Removing stop words and steming the questions..."
+	cleanQuestions = removeStopWords(questions,stopWords) # a list of stop-free questions
+	stemedQuestions = steming(cleanQuestions) # a list of stop-free, stemmed questions
 
-	print "TFIDF searching... "
+	print >> sys.stderr, "TFIDF searching... "
 	negWords = {'no':1, 'not':1, 'never':1, 'none':1, 'neither':1, 'nothing':1, 'n\'t':1}
-	for q in stemedQuestions.keys():
-		print "\nQuestion:\t", stemedQuestions[q].strip()
-		ansSentence = tfidfSearch(tfidf_vectorizer, tfidf_matrix, stemedSentences, q)
-		if isSimpleQuest(stemedQuestions[q]):
-			print "Related sentence:\t", stemedSentences[ansSentence]
-			print "Answer:\t\t", answerSimple(stemedSentences[ansSentence],stemedQuestions[q],negWords)
+
+	# Write detailed output to a log file
+	logName = article.split('.')[0]+'.log'
+	logfile = open(logName,'w')
+
+	for i in range(0,len(stemedQuestions)):
+	# for q in stemedQuestions:
+		logfile.write("======================================\n")
+		logfile.write("\nQuestion:["+str(i+1)+']\t'+questions[i].strip().encode('utf-8')+"\n")
+		ansSentenceIdx = tfidfSearch(tfidf_vectorizer, tfidf_matrix, stemedSentences, stemedQuestions[i])
+		ansSentence = sentences[ansSentenceIdx]
+		if isSimpleQuest(questions[i]):
+			logfile.write( "Related sentence:\t" + ansSentence.strip().encode('utf-8')+"\n")
+			logfile.write( "Answer:\t\t" + answerSimple(ansSentence,questions[i],negWords)+"\n")
+			print answerSimple(ansSentence,questions[i],negWords)
 		else:
-			print "Answer:\t\t",stemedSentences[ansSentence]
-	
-	
+			logfile.write( "Answer:\t\t"+ansSentence.encode('utf-8')+"\n")
+			print ansSentence.strip().encode('utf-8')
 
 if __name__ == '__main__':
 	main()
