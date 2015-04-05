@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import subprocess
+import codecs
 
 def runCoref(content,filename,destination):
 	print destination
@@ -22,7 +23,7 @@ def runCoref(content,filename,destination):
 	for para in paras:
 		if len(para.strip()) == 0:continue
 		split = "processing/split_" + one + "/" + str(i) + ".txt"
-		fw = open(split,'w')
+		fw = codecs.open(split,'w',encoding='utf-8',errors='ignore')
 		fw.write(para)
 		fw.close()
 		i += 1
