@@ -1,2 +1,0 @@
-PARSE	-53.00714874267578	(ROOT (S (NP (NNP Singapore)) (VP (VBZ is) (NP (DT a) (ADJP (RB very) (JJ diverse) (CC and) (JJ young)) (NN country))) (. .)))
-PARSE	-93.87310028076172	(ROOT (S (NP (PRP It)) (VP (VBZ has) (NP (NP (JJ many) (NNS languages)) (, ,) (NP (NNS religions)) (, ,) (CC and) (NP (NP (NP (NNS cultures)) (PP (IN for) (NP (DT a) (NN country)))) (NP (PRP$ its) (NN size))))) (. .)))

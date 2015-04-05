@@ -1,2 +1,0 @@
-PARSE	-114.05570220947266	(ROOT (S (NP (DT Some) (NNS schools)) (VP (VP (VBP have) (NP (NP (DT a) (NN degree)) (PP (IN of) (NP (NN freedom)))) (PP (IN in) (NP (PRP$ their) (NN curriculum)))) (CC and) (VP (VBP are) (VP (VBN known) (NP (ADJP (RB as) (JJ autonomous)) (NNS schools))))) (. .)))
-PARSE	-66.41999816894531	(ROOT (S (NP (DT These)) (VP (VBP exist) (PP (IN from) (NP (NP (DT the) (JJ secondary) (NN education) (NN level)) (ADVP (CC and) (RB up))))) (. .)))
