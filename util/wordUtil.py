@@ -18,13 +18,5 @@ def is_endpunc(word):
 def is_question_word(word):
     return word.lower() in q_words
 
-# def is_name_pre(self, word):
-#     return word.lower() in namePre
-
-# determinds if a word is proper noun based on the tag "NNP" or the capitalization
 def is_prop_n(word, tag):
     return tag == "NNP" or word[0].isupper()
-
-# Test
-if __name__ == "__main__":
-    print is_be_verb('is') 

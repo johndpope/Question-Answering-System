@@ -19,6 +19,7 @@ from nltk.stem.wordnet import WordNetLemmatizer
 
 stanford_parser = StanfordParser('StanfordCoreNLP/stanford-parser.jar', 'StanfordCoreNLP/stanford-parser-3.4.1-models.jar')
 stanford_postagger = POSTagger('util/stanford-postagger/models/english-bidirectional-distsim.tagger','util/stanford-postagger/stanford-postagger.jar') 
+pronouns_to_rule_out = set(['he','she','his','her','him','hers','this','it','its','them','themselves','himself','herself'])
 
 def capitalize_First_Char(sentence):
     sentence[0] = sentence[0].upper()
@@ -31,13 +32,6 @@ def transform_IT_IS(sentence):
         question = sentence.replace("It is", "What is")
         return (question, True)
     return (sentence, False)
-
-# def generate_yes_no_question_from_NVN
-
-def add_questionmark(sentence):
-    if (sentence[len(sentence) - 1] == '.'):
-        sentence = sentence[:len(sentence) - 1]
-    return sentence + "?"
 
 # GIVEN string representing a declarative sentence,
 # RETURNS string representing a question.
@@ -87,58 +81,72 @@ def transform(sentence):
             question = question.split(",")[0] + "?"
         return (question, True)
 
-    """
-    tagged = nltk.pos_tag(tokens)
-    entities = nltk.chunk.ne_chunk(tagged)
-    (word0, tag0) = tagged[0]
-    (word1, tag1) = tagged[1]
-    if (tag0 == 'PRP' and tag1 =='VBZ'):
-        tokens = [word1.capitalize(), word0.lower()] + tokens[2:]
-        return (" ".join(tokens), True)
-    """
-    #print("FAIL: " + sentence)
-
     return (sentence, False)
 
-def trans_Q(sentence, s_parser, s_postagger, s_NERtagger):
-    qt = QuestionTransformer(sentence, s_parser, s_postagger, s_NERtagger)
-    q = qt.transform_IF_TO_WHY_WILL()
-    if q != None: return (q, True)
-    q = qt.transform_NER_based()
-    if q != None: return (q, True)
-    q = qt.transform_WHEN_FROM_YEAR()
-    if q != None: return (q, True)
-    q = qt.transform_YES_NO_NPVP(None, None)
-    if q != None: return (q, True)
-    q = qt.transform_IT_IS()
-    if q != None: return (q, True)
+# Drop sentences with pronouns
+def check_pronouns(token_list):
+    if any(token in pronouns_to_rule_out for token in token_list):
+        return False
+    else:
+        return True
+
+def transform_hard_question(q):
+    if "more" in q:
+        i = q.index("more")
+        if q[i-1] != "once":
+            q[i] = "less"
+    elif "less" in q:
+        i = q.index("less")
+        q[i] = "more"
+    return q
+
+def generate_question(sentence, s_parser, s_postagger, s_NERtagger):
+
+    transformer = QuestionTransformer(sentence, s_parser, s_postagger, s_NERtagger)
+    q = transformer.transform_SBAR()
+    if q != None:
+        return (q, True)
+    q = transformer.transform_IF_TO_WHY()
+    if q != None:
+        return (q, True)
+    q = transformer.transform_IF_TO_WHY()
+    if q != None:
+        return (q, True)
+    q = transformer.transform_NER_based()
+    if q != None: 
+        return (q, True)
+    q = transformer.transform_YES_NO_NPVP(None, None)
+    if q != None:
+        q = transform_hard_question(q)
+        return (q, True)
+    q = transformer.transform_IT_IS()
+    if q != None:
+        return (q, True)
+
     # failed on trasforming this sentence
     return (sentence, False)
 
-# more JJ -> less JJ
-# more than -> less than
-# antonyms
-def hard_question_transform(token_list):
-    pass
+# Add question mark and captalize the question
+def finalize_question(token_list):
+    token_list.append('?')
+    question = ' '.join(token_list)
+    return question[0].upper() + question[1:]
     
 # GIVEN list of sentences,
 # RETURNS list of questions.
-def process(sentences):
+def process(sentences, num_questions):
+
     # Initialize Stanford NLP tool
     s_parser = StanfordParser('StanfordCoreNLP/stanford-parser.jar', 'StanfordCoreNLP/stanford-parser-3.4.1-models.jar')
     s_postagger = POSTagger('util/stanford-postagger/models/english-bidirectional-distsim.tagger','util/stanford-postagger/stanford-postagger.jar') 
     s_NERtagger = NERTagger('util/stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz','util/stanford-ner/stanford-ner.jar')
 
-    questions = [ ]
+    questions = []
     for sentence in sentences:
         # print sentence
-        # tags = rdrpos.pos_tag(sentence.strip())
-        # print tags
-        # tokens = nltk.word_tokenize(sentence)
-        # print stanford_postagger.tag(tokens)
-        # print stanford_parser.tag(sentence.strip())
-        # (question, success) = trasform(sentence)
-        (token_list, success) = trans_Q(sentence, s_parser, s_postagger, s_NERtagger)
-        if (success): questions.append(' '.join(token_list))
-        # TODO: antomyns, synmyms
+        (token_list, success) = generate_question(sentence, s_parser, s_postagger, s_NERtagger)
+        if (success) and check_pronouns(token_list):
+            questions.append(finalize_question(token_list))
+        if len(questions) >= num_questions:
+            break
     return questions

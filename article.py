@@ -119,9 +119,9 @@ class Article(object):
 		title = self.arkfolder + "/" + self.filename.split('/')[-1]
 		title = title.replace('html','txt')
 		title = title.replace('htm','txt')
-		print title
+		# print title
 		if title not in files:
-			print "not there!!"
+			# print "not there!!"
 			coref.runCoref(self.content,self.filename,self.arkfolder)
 		body = (codecs.open(title,encoding = 'utf-8')).read()
 		return body

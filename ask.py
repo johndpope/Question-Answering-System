@@ -5,18 +5,14 @@
 from nltk.tag.stanford import POSTagger
 
 import nltk
-from util.article import Article
+from article import Article
 from util.nltkHelper import *
 import util.questionContentSelector as selector
-import util.questionGenerator as questionGenerator
+import util.questionListGenerator as questionListGenerator
 import traceback, sys, re
 
 
 if __name__ == "__main__":
-
-    # the set of pronouns, used for anaphora resolution
-    pronouns = set(["he", "she", "it", "its", "it's", "him", "her", "his","they",
-                "their","we", "our","i","you","your","my","mine","yours","ours"])
 
     if len(sys.argv) != 3:
         sys.exit("""
@@ -25,25 +21,21 @@ if __name__ == "__main__":
             N               Number of questions to output.
         """)
 
-    # print get_synonyms("prefer")[0].examples()
-    # print get_antonym()
-
-
     article_filename = sys.argv[1]
     num_questions = int(sys.argv[2])
 
-    article = Article(article_filename)
-    sentences = article.to_sentences_list()
+    article = Article(article_filename, 'processed')
+    sentences = article.get_sentence_list(False, False, False)
 
     # Fetch sentence candidates that can be converted into questions.
     selected_sentences = selector.process(sentences)
     # for sent in selected_sentences:
-    #     print sent
-
+        # print sent        
+    
     # Use POS Tagging and Transformation rules to generate questions
-    questions = questionGenerator.process(selected_sentences[:num_questions*2])
+    questions = questionListGenerator.process(selected_sentences, num_questions)
 
     # Select tops and print questions
-    # questions = questions[:num_questions]
+    questions = questions[:num_questions]
     for question in questions:
         print question
