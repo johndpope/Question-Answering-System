@@ -47,12 +47,12 @@ def main():
 	filepath = sys.argv[1] # THIS MAY CHANGE
 	destination = sys.argv[2]
 	filepath += "/*.txt" 
-	print "hahaha"
-	print filepath
+	#print "hahaha"
+	#print filepath
 	files = glob.glob(filepath)
 	sortFile(files)
 	one = destination + "/" + (filepath.split('/')[1]).split('_')[1] + ".txt"
-	print "merge " + one
+	#print "merge " + one
 	fmerge = open(one,'a') # THIS MAY CHANGE
 
 	for name in files:
