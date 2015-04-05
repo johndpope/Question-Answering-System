@@ -5,7 +5,7 @@ def runCoref(content,filename,destination):
 	print destination
 	
 	one = filename.split("/")[-1].split(".")[0]
-	'''
+	
 	mkdir0 = "mkdir split_" + one
 	p1_0 = subprocess.Popen(mkdir0,shell=True)
 	p1_0.wait()
@@ -34,7 +34,7 @@ def runCoref(content,filename,destination):
 	toxml = "python coref/toxml.py split_" + one
 	p4 = subprocess.Popen(toxml,shell=True)
 	p4.wait()
-	'''
+	
 	preprocess = "python coref/preprocess.py split_" + one 
 	p5 = subprocess.Popen(preprocess,shell=True)
 	p5.wait()
