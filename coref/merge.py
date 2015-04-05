@@ -45,10 +45,13 @@ def partition(fileList,start,end):
 
 def main():
 	filepath = sys.argv[1] # THIS MAY CHANGE
+	destination = sys.argv[2]
 	filepath += "/*.txt" 
+	print "hahaha"
+	print filepath
 	files = glob.glob(filepath)
 	sortFile(files)
-	one = "processed/" + (filepath.split('/')[1]).split('_')[1] + ".txt"
+	one = destination + "/" + (filepath.split('/')[0]).split('_')[1] + ".txt"
 	print "merge " + one
 	fmerge = open(one,'a') # THIS MAY CHANGE
 

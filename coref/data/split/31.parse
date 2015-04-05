@@ -1,5 +1,0 @@
-PARSE	-79.32247924804688	(ROOT (NP (NP (NNP Ian) (NNP Ridpath) (CC and) (NNP Wil) (NNP Tirion)) (NP (CD (2007))) (. .)))
-PARSE	-75.51045227050781	(ROOT (NP (NP (NNP Stars) (CC and) (NNP Planets) (NNP Guide)) (, ,) (NP (NNP Collins) (, ,) (NNP London)) (. .)))
-PARSE	-34.74050521850586	(ROOT (NP (NNS ISBN) (CD 978-0-00-725120-9) (. .)))
-PARSE	-49.02288818359375	(ROOT (NP (NP (NNP Princeton) (NNP University) (NNP Press)) (, ,) (NP (NNP Princeton)) (. .)))
-PARSE	-34.74050521850586	(ROOT (NP (NNS ISBN) (CD 978-0-691-13556-4) (. .)))

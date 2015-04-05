@@ -12,6 +12,7 @@ def main():
 		try:
 			with open(name) as f:
 				body = f.read()
+				if len(body.strip()) == 0:continue
 				body = "<root>"+body+"</root>"
 				body = unicode(body,'utf-8',errors='ignore')
 				f.close()

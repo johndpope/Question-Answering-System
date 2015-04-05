@@ -10,7 +10,7 @@ def main():
 
 	for name in files:
 		print name
-		command = "./arkref.sh -input "+ name
+		command = "./coref/arkref.sh -input "+ name
 		'''
 		p = subprocess.Popen(command,shell=True)
 		p.wait()
