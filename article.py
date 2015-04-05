@@ -13,7 +13,7 @@ class Article(object):
 		self.filetype = filename.split('.')[-1]
 		self.content = self.shorten_file()
 		self.arkfolder = arkfolder.strip('/')
-		self.arkcontent = self.doCoref()
+		self.arkcontent = self.do_coref()
 		self.list = self.generate_sentence_list()
 
 	def shorten_file(self):
@@ -77,15 +77,18 @@ class Article(object):
 		stem = self.stemming(original)
 		arkstem = self.stemming(arkoriginal)
 
-		rmstop = self.removeStopWords(original,stopWords)
-		arkrmstop = self.removeStopWords(arkoriginal,stopWords)
+		rmstop = self.remove_stop_words(original,stopWords)
+		arkrmstop = self.remove_stop_words(arkoriginal,stopWords)
+
+		rmstem = self.stemming(rmstop)
+		arkrmstem = self.stemming(arkrmstop)
 
 		alllist['original'] = original
 		alllist['arkoriginal'] = arkoriginal
 		alllist['stem'] = stem
 		alllist['arkstem'] = arkstem
-		alllist['rmstop'] = rmstop
-		alllist['arkrmstop'] = arkrmstop
+		alllist['rmstem'] = rmstem
+		alllist['arkrmstem'] = arkrmstem
 
 		return alllist
 
@@ -103,7 +106,7 @@ class Article(object):
 			stemmedSentences.append(' '.join(stemmedTokens))
 		return stemmedSentences
 
-	def removeStopWords(self,sentences,stopWords):
+	def remove_stop_words(self,sentences,stopWords):
 		"""Input: a list of sentences & a dict of stop words"""
 		cleanSentences = []
 		for sen in sentences:
@@ -114,7 +117,7 @@ class Article(object):
 			cleanSentences += [' '.join(tokens).strip()]
 		return cleanSentences
 
-	def doCoref(self):
+	def do_coref(self):
 		files = glob.glob(self.arkfolder + '/*.txt')
 		title = self.arkfolder + "/" + self.filename.split('/')[-1]
 		title = title.replace('html','txt')
