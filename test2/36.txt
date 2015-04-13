@@ -1,0 +1,30 @@
+hard Is Python Scripting Provider a core feature since Version 4.0 from 7 November 2013 ?
+midi What is syntactically needed to create an empty code block ?
+easy Does Python provide a round function for rounding floats to integers ?
+hard Does Cobra use indentation and a different syntax ?
+midi When did Nokia release a Python interpreter for the Series 60 mobile phones called PyS60 ?
+easy Is an important goal of the Python developers making Python fun to use ?
+hard Is CPython distributed with a small standard library written in a mixture of C and Python ?
+midi When was Python 2.0 released ?
+easy Did LibreOffice include Python and intends to replace Java with Python ?
+easy Is CPython managed by the non-profit Python Software Foundation ?
+easy Are the parentheses around the tuple optional in some contexts ?
+easy Can SQLAlchemy be used as data mapper to a relational database ?
+easy Is the third and final part of the version number incremented ?
+easy Has the behavior of division changed significantly over time ?
+easy Do Python 3.0 changes  to always be floating point division ?
+easy Are there special mentoring programmes like the Pyladies ?
+easy Does Python make a distinction between lists and tuples ?
+easy Is the major academic conference on Python named PyCon ?
+easy Is the second part of the version number incremented ?
+easy Is the first part of the version number incremented ?
+easy Is Python intended to be a highly readable language ?
+easy Does Development take place on a self-hosted source code repository running Mercurial ?
+easy Does Python have a " string format " operator % ?
+easy Is the floor division  operator introduced ?
+easy Is each element of a slice a shallow copy ?
+easy Is a common neologism in the Python community pythonic , which can have a wide range of meanings related to program style ?
+easy Is Python a widely used general-purpose , high-level programming language ?
+easy Did ECMAScript borrow iterators , generators , and list comprehensions from Python ?
+easy Are these releases made whenever a sufficient number of bugs have been fixed upstream since the last release , or roughly every 3 months ?
+easy Is a version taking advantage of multi-core processors using software transactional memory being created ?

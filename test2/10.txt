@@ -1,0 +1,30 @@
+hard Do packages make Java well suited for small scale applications ?
+midi Which programming language uses comments similar to those of C++ ?
+easy May a class that is not declared public be stored in any .java file ?
+hard Is Oracle Corporation the current owner of the official implementation of the Java SE platform , following their acquisition of Sun Microsystems on December 27 , 2010 ?
+midi Which programming language contains multiple types of garbage collectors ?
+easy Is automatically converted to a String object by the compiler ?
+midi When did Sun Microsystems release the first public implementation as Java 1.0 ?
+midi Why is the Oracle implementation the de facto standard ?
+easy Is explicit memory management not possible in Java ?
+midi Why is a " null pointer exception " thrown ?
+midi Which programming language was not considered to be a pure object-oriented programming language ?
+easy Is the syntax of Java largely derived from C++ ?
+midi When does the unreachable memory become eligible to be freed automatically by the garbage collector ?
+midi When were generics added to the Java language , as part of J2SE 5.0 ?
+easy Can a servlet almost be thought of as an applet that runs on the server side—without a face ?
+midi What is possible to specify a different look and feel through the pluggable look and feel system of Swing ?
+midi What is controlled by Sun Microsystems in cooperation with others through the Java Community Process program ?
+easy Is a constructor used to initialize an object that is a newly created instance of the class ?
+midi Why does a memory leak occur ?
+midi When does exiting the main method do not cause the program to terminate because the AWT event dispatching thread remains active until all of the Swing top-level windows have been disposed ?
+easy Are the platforms : Java Card for smartcards ?
+easy Is a major benefit of using bytecode porting ?
+easy Was the desktop version renamed J2SE ?
+easy Does if the program attempt to access or deallocate memory that has already been deallocated , the result is undefined and difficult to predict , and the program is likely to become unstable andor crash ?
+easy Do Generics allow compile-time type checking without having to create many container classes , each containing almost identical code ?
+easy Does either the container operate on all subtypes of a class or interface , usually Object , or a different container class has to be created for each contained class ?
+easy Does each package contain a set of related interfaces , classes and exceptions ?
+easy May a Java program contain multiple classes that have main methods , which means that the VM needs to be explicitly told which class to launch from ?
+easy Does after that , the generated servlet create the response ?
+easy Did Gosling design Java with a CC++-style syntax that system and application programmers would find familiar ?

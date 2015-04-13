@@ -1,0 +1,30 @@
+hard Do array indices and hash keys use same kind of braces ?
+midi Which programming language was originally named " Pearl " ?
+easy Do Strings and regular expressions have different standard delimiters ?
+hard Has Perl 5 been in inactive development since then ?
+midi When did Wall put forth a call for suggestions for a new version of Perl from the community ?
+easy Are new poems regularly submitted to the community at PerlMonks ?
+hard Was Perl 5.8 first released on June 18 , 2002 , and had nearly yearly updates since then ?
+midi Which programming language has two slogans ?
+easy Does the interpreter have an object-oriented architecture ?
+hard Was Perl 5.003 released July 25 , 1996 , as a security release ?
+midi When did Larry Wall begin work on Perl ?
+easy Do all versions of Perl do automatic data-typing and automatic memory management ?
+hard Was Perl 5.002 released on November 29 , 1996 with the new prototypes feature ?
+midi When did Audrey Tang create the pugs project , an implementation of Perl 6 in Haskell ?
+easy Are distributions available for most operating systems ?
+hard Was a Perl Golf Apocalypse held at Perl Conference 4.0 in Monterey , California in June 2000 ?
+midi When did work begin on the apocalypses for Perl 6 , a series of documents meant to summarize the change requests and present the design of the next generation of Perl ?
+easy Did initial design of Perl 5 continue into 1994 ?
+hard Was version 5.12.4 released on July 20 , 2011 ?
+midi Why does the combination make Perl a popular all-purpose language for system administrators , particularly ?
+easy Is JSON support built-in as of 5.14.2 ?
+hard Was Perl 5.6 released on October 22 , 2000 ?
+midi Which programming language has a Turing-complete grammar because parsing can be affected by run-time code executed during the compile phase ?
+easy Did Perl 4 go through a series of maintenance releases , culminating in Perl 4.036 in 1993 ?
+hard Was Perl 5.005 released on June 22 , 1998 ?
+midi When is there additional overhead during the execution phase that typically is n't present for programs written in compiled languages such as C or C++ ?
+easy Are Perl 5 development versions released on a monthly basis , with major releases coming out once per year ?
+hard Was Perl 5.001 released on October 13 , 1995 ?
+midi Which programming language was originally developed by Larry Wall in 1987 as a general-purpose Unix scripting language to make report processing easier ?
+hard Was Perl 5.000 released on March 17 , 1994 ?
